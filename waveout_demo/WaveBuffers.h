@@ -7,8 +7,10 @@
 
 
 static std::mutex locker;
+std::mutex player_quitter;
 static std::condition_variable cv1;
 static std::condition_variable cv2;
+std::condition_variable cv3;
 //
 static DWORD currentsize = 0;
 static std::queue<WAVEHDR *> wavehdrQueue;
