@@ -87,11 +87,11 @@ struct Playback
 
 	void operator()()
 	{
+		std::unique_lock<std::mutex> playend(player_quitter);
 		while (!wavePlayer.donePlaying)
 		{
-//shld end the while when all buffers played
+			cv3.wait(playend);
 		}
-		
 		waveOutClose(hWaveOut);
 	}
 };
