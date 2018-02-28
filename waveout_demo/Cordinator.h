@@ -72,7 +72,6 @@ struct Cordinator
 					WAVEHDR *hdr = wavehdrQueue.front();
 					hdr->dwBufferLength = WAVE_BUFFER_SIZE;
 					memcpy(hdr->lpData, buff, WAVE_BUFFER_SIZE);
-
 					buff += WAVE_BUFFER_SIZE;
 					currentsize += WAVE_BUFFER_SIZE;
 					wavehdrQueue.pop();
@@ -80,7 +79,6 @@ struct Cordinator
 
 				//wakeup only one thread wich is waiting for the mutex
 				cv2.notify_one();
-				lock.unlock();
 				wavePlayer.donePlaying = false;
 				wavePlayer.numWaves = NO_OF_THREADS;
 			
@@ -93,6 +91,7 @@ struct Cordinator
 						done = true;
 						wavePlayer.donePlaying = true;					
 						cv2.notify_one();
+						cv3.notify_one();
 						break;
 					}
 
